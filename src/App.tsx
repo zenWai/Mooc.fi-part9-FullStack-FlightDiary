@@ -51,7 +51,9 @@ const App: React.FC = () => {
       setDiaries(sortedDiaryEntries);
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
-        setError(`Error: ${error.response.data || 'An unknown error occurred.'}`);
+        // @ Playground StackBlitz message comes with <script>
+        const sanitizeMessage = error.response.data.replace(/<script.*?<\/script>/gi, '');
+        setError(`Error: ${sanitizeMessage || 'An unknown error occurred.'}`);
       } else {
         setError('An unknown error occurred.');
       }
