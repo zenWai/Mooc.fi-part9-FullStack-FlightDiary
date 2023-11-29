@@ -8,8 +8,8 @@ import {act} from "react-dom/test-utils";
 // Mock Axios module and default
 vi.mock('axios', () => ({
   default: {
-    get: vi.fn(() => Promise.resolve({ data: [] })),
-    post: vi.fn(() => Promise.resolve({ data: {} })),
+    get: vi.fn(),
+    post: vi.fn(),
     CancelToken: {
       source: () => ({
         token: {},
@@ -17,8 +17,8 @@ vi.mock('axios', () => ({
       }),
     },
   },
-  get: vi.fn(() => Promise.resolve({ data: [] })),
-  post: vi.fn(() => Promise.resolve({ data: {} })),
+  get: vi.fn(),
+  post: vi.fn(),
 }));
 
 describe('App', () => {
@@ -30,7 +30,7 @@ describe('App', () => {
       resolvePromise = resolve;
     });
 
-    (axios.get as vi.Mock).mockReturnValue(promise);
+    vi.mocked(axios.get).mockResolvedValue(promise)
 
     // Render the component (it should be in the loading state)
     await act(async () => {
@@ -52,7 +52,7 @@ describe('App', () => {
     const mockDiaries = [
       { id: 1, date: '2023-01-01', weather: 'sunny', visibility: 'great', comment: 'Nice day' },
     ];
-    (axios.get as vi.Mock).mockResolvedValue({ data: mockDiaries });
+    vi.mocked(axios.get).mockResolvedValue({ data: mockDiaries })
 
     await act(async () => {
       render(<App />);
@@ -61,10 +61,10 @@ describe('App', () => {
   });
 
   it('adds a new diary entry via the form and updates the list', async () => {
-    (axios.get as vi.Mock).mockResolvedValue({ data: [] });
+    vi.mocked(axios.get).mockResolvedValue({ data: [] })
 
     const newDiary = { id: 3, date: '2023-01-03', weather: 'cloudy', visibility: 'ok', comment: 'Very nice comment' };
-    (axios.post as vi.Mock).mockResolvedValue({ data: newDiary });
+    vi.mocked(axios.post).mockResolvedValue({ data: newDiary })
 
     await act(async () => {
       render(<App />);
