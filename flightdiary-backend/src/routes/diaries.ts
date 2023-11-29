@@ -34,4 +34,13 @@ router.post('/', (req, res) => {
   }
 });
 
+router.delete('/:id', (req, res) => {
+  const success = diaryService.removeDiary(Number(req.params.id));
+  if (success) {
+    res.status(204).end();
+  } else {
+    res.status(404).send('Diary entry not found');
+  }
+});
+
 export default router;
