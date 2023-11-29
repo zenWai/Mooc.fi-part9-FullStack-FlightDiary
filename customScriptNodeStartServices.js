@@ -64,6 +64,31 @@ const startFrontend = () => {
   });
 };
 
+const runTests = () => {
+  return new Promise((resolve, reject) => {
+    const testRunner = exec('npm run test');
+
+    testRunner.stdout.on('data', (data) => {
+      console.log(`Tests: ${data}`);
+    });
+
+    testRunner.stderr.on('data', (data) => {
+      console.error(`Test Error: ${data}`);
+      reject();
+    });
+
+    testRunner.on('close', (code) => {
+      if (code === 0) {
+        console.log('Tests completed successfully.');
+        resolve();
+      } else {
+        console.error(`Tests failed with exit code ${code}`);
+        reject(`Tests failed with exit code ${code}`);
+      }
+    });
+  });
+};
+
 const init = async () => {
   try {
     await startBackend();
@@ -82,6 +107,8 @@ const init = async () => {
     if (localUrl) {
       openBrowser(localUrl);
     }
+
+    await runTests();
   } catch (error) {
     console.error('Failed to start services:', error);
   }
