@@ -1,4 +1,4 @@
-# FlightDiary is a full-stack application designed to track and manage personal diary entries.
+# FlightDiary is a Full-Stack Application designed to Track and Manage Personal Diary entries.
 
 This project showcases building and testing a modern web application.
 
@@ -10,7 +10,7 @@ Repo specifically created for StackBlitz Playground showcase
 #### Technologies Used
 
 <ul>
-<li>Frontend: React, TypeScript, Axios</li>
+<li>Frontend: React, TypeScript, Vite, Axios</li>
 <li>Backend: Node.js, Express</li>
 <li>Testing: Jest, Vitest</li>
 <li>Other: Concurrently, Custom scripts to start services</li>
